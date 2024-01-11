@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <link rel="stylesheet" href="./css/bootstrap.min.css"/>
+    <script>var $ = require('jquery');</script>
+    <script>require('popper.js');</script>
+    <script>var bootstrap = require('bootstrap');</script>
+</head>
+<body>
+<div id="app">
+    <!-- Layout for vue 2 -->
+    <!-- Loading overlay -->
+    <div class="loading-overlay" v-if="loading">
+        <div class="spinner-border" style="margin-top: 50px" role="status">
+        </div>
+        <br>
+        <span class="sr-only">Loading...</span>
+    </div>
+    <!-- Modal for plugin changelog -->
+    <div class="modal fade" id="changeLogs" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="position: fixed">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Changelogs</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="changeLogsBody">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- include a bar with a directory input form -->
+    <!-- use boostrap to style -->
+    <div class="container">
+        <div class="row">
+            <h3 class="text-center">Pick server root directory</h3>
+            <div class="input-group mb-3">
+                <!-- input directory picker -->
+                <div class="input-group-append" style="margin-right: 10px;">
+                    <input class="form-control" type="file" id="formFile" webkitdirectory="true" directory>
+                </div>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" v-on:click="loadPlugins">Load plugins
+                    </button>
+                </div>
+            </div>
+            <span>Please always double check if the plugin image and url matches the plugin. </span><br>
+            <span>The app uses a search function as the plugin does not give it's unique ID, so it may leads to wrong results</span><br>
+            <span>Wrong results may cause breaking or in worst cases infection due to impersonation</span><br>
+            <span>Use the software at your own risk</span><br>
+        </div>
+        <div class="row">
+            <div v-for="plugin in plugins" :key="plugin.name" style="margin-top: 5px;">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="text-center">{{plugin.name}}</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <img :src="plugin.imageBase64" style="max-width: 100px" alt="Icon" class="img-fluid">
+                            </div>
+                            <div class="col-6">
+                                <p class="card-text desc">FileName: {{plugin.file}}</p>
+                                <p class="card-text desc">Description: {{plugin.description}}</p>
+                                <p class="card-text desc">Server description: {{plugin.remoteDescription}}</p>
+                                <p class="card-text desc">Author: {{plugin.author}}</p>
+                                <p class="card-text desc">Version: {{plugin.version}}</p>
+                                <p class="card-text desc">Latest: {{plugin.newVersion}}</p>
+                                <p class="card-text desc">IsPremium: {{plugin.premium}}</p>
+                                <p class="card-text desc">Downloads: {{plugin.downloads}}</p>
+                                <p class="card-text desc">Link: <a :href="plugin.url">{{plugin.url}}</a></p>
+
+
+                            </div>
+                            <div class="col-2">
+                                <button class="btn btn-outline-secondary" type="button" :disabled="true" v-if="plugin.hasUpdated">
+                                    Updated
+                                </button>
+                                <button class="btn btn-outline-secondary" type="button" v-else
+                                        v-on:click="updatePlugin(plugin)"
+                                        :disabled="plugin.newVersion === null || plugin.newVersion === plugin.version">
+                                    Update
+                                </button>
+                                <button style="margin-top: 10px" class="btn btn-outline-secondary" type="button" v-on:click="changeLogs(plugin)">
+                                    Changes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+<footer>
+    <style>
+        .desc {
+            margin-bottom: 0px !important;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            text-align: center;
+            font-size: 20px;
+            color: white;
+            font-weight: bold;
+
+        }
+    </style>
+    <script src="renderer.js"></script>
+</footer>
+</html>
