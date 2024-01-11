@@ -22,5 +22,5 @@ If you want to contribute to the project, you can open a pull request or an issu
 
 ## Screenshots
 
-![Screenshot 1](/screenshots/01.jpg)
-![Screenshot 2](/screenshots/02.jpg)
+![Screenshot 1](https://github.com/LucaFontanot/mc-plugin-updater/blob/master/screenshots/01.JPG?raw=true)
+![Screenshot 2](https://github.com/LucaFontanot/mc-plugin-updater/blob/master/screenshots/02.JPG?raw=true)
