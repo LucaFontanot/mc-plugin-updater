@@ -1,3 +1,4 @@
+[![Github All Releases](https://img.shields.io/github/downloads/LucaFontanot/mc-plugin-updater/total.svg)]()
 # Minecraft Plugin Updater
 A simple Windows app to check and update plugins. 
 No command line, no super automations.  
